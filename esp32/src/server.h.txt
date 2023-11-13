@@ -1,0 +1,7 @@
+#include <Arduino.h>
+#include <WiFi.h>
+
+WiFiClient waitForClient();
+WiFiServer serverInit();
+void respondToClient(WiFiClient client, String response);
+void serverListen(String response);

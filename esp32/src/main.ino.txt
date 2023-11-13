@@ -1,0 +1,44 @@
+#include <Arduino.h>
+#include <WiFi.h>
+#include <WiFiMulti.h>
+#include <WiFiClientSecure.h>
+#include <WebSocketsServer.h>
+#include <Wire.h>
+
+const int imu_addr = 0x68;
+const int gyro_reg = 0x3b;
+
+const char* wifi_name = "NETGEAR77";
+const char* wifi_pass = "newdaisy127";
+
+WebSocketsServer webSocket = WebSocketsServer(7773);
+
+
+float* readValues(int reg, int n) {
+  Wire.beginTransmission(0x68);
+  Wire.write(reg);
+  Wire.endTransmission(true);
+  Wire.requestFrom(imu_addr, 2 * n, true);
+
+  float* values = new float[n];
+  for (int i = 0; i < n; i++) {
+    values[i] = (Wire.read() << 8 | Wire.read()) / 16384.0;
+  }
+  return values;
+}
+
+void setup() {
+  Wire.begin();
+  Wire.beginTransmission(0x68);
+  Wire.write(0x6b);
+  Wire.write(0x00);
+  Wire.endTransmission(true);
+
+  WiFi.begin(wifi_name, wifi_pass);
+}
+
+
+void loop() {
+  float* values = readValues(gyro_reg, 3);   
+  delay(100);
+}

@@ -1,0 +1,43 @@
+#include <Arduino.h>
+#include <SPI.h>
+#include <WiFi.h>
+
+#include "./wificreds.h"
+
+WiFiClient waitForClient() {
+    WiFiClient client;
+    do {
+        WiFiClient client = server.available();
+    } while (!client);
+    if(Serial) { 
+        Serial.println("new client"); 
+    }
+    return client;
+}
+
+void respondToClient(WiFiClient client, String response) {
+    client.println("HTTP/1.1 200 OK");
+    client.println("Content-type:text/text");
+    client.println();
+    client.println(response);
+    delay(200);
+    client.stop();
+
+}
+
+void serverListen(String response) {
+    // WiFiClient client = server.available();
+    // if(Serial) {
+    //     Serial.println("new client?");
+    // }
+    // if(!client) { return; }
+    // if(Serial) {
+    //     Serial.println("new client!!!");
+    // }
+    // client.println("HTTP/1.1 200 OK");
+    // client.println("Content-type:text/text");
+    // client.println();
+    // client.println(response);
+    // delay(200);
+    // client.stop();
+}
