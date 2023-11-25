@@ -22,9 +22,9 @@ ChartJS.register(
 );
 
 const dataColors = {
-    x: 'red',
-    y: 'green',
-    z: 'blue',
+    'gyro_x': 'red',
+    'gyro_y': 'green',
+    'gyro_z': 'blue',
 }
 
 const toSeries = (data, name) => {
@@ -39,6 +39,13 @@ const toSeries = (data, name) => {
 export const options = {
   responsive: true,
   aspectRatio: 3,
+  elements: {
+    point: {
+      borderWidth: 0,
+      radius: 0,
+      backgroundColor: '#00000000',
+    }
+  },
   plugins: {
     legend: {
       position: 'left',
@@ -50,8 +57,8 @@ export const options = {
 };
 
 const DataChart = ({ data, dataKeys }) => {
-    return <Line options={options} data={{
-    labels: data.map(e => e.t.toPrecision(3)),
+  return <Line options={options} data={{
+    labels: data.map(i => i.t),
     title: {
         display: false
     },
@@ -59,7 +66,7 @@ const DataChart = ({ data, dataKeys }) => {
         duration: 0
     },
     datasets: dataKeys.map(k => toSeries(data, k))
-    }} />
+  }} />
 }
 
 export { DataChart }

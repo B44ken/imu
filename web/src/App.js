@@ -5,8 +5,7 @@ import { DataTable } from "./DataTable.js";
 import React, { useState, useEffect } from "react";
 import { DataChart } from "./DataChart.js";
 
-const dataTest = new DataServer()
-dataTest.connect('ws://localhost:7778')
+const dataTest = new DataServer('/api/dump', 100)
 
 function App() {
   const [data, setData] = useState([])
@@ -24,9 +23,9 @@ function App() {
           <div className="col-md-5">
             <h2>Chart</h2>
             {/* <DataChart data={data} dataKeys={['x', 'y', 'z']} /> */}
-            <DataChart data={data} dataKeys={['x']} />
-            <DataChart data={data} dataKeys={['y']} />
-            <DataChart data={data} dataKeys={['z']} />
+            <DataChart data={data} dataKeys={['gyro_x']} />
+            <DataChart data={data} dataKeys={['gyro_y']} />
+            <DataChart data={data} dataKeys={['gyro_z']} />
           </div>
           <div className="col-md-5">
             <h2>Table</h2>
